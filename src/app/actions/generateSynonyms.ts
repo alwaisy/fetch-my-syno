@@ -35,7 +35,12 @@ export async function generateSynonyms(word: string) {
     const generatedContent = await response.json();
     const text = generatedContent.candidates[0].content.parts[0].text;
 
-    return extractJson(text) as WordResponse;
+     if (JSON.parse(text).types.length === 1) {
+      return JSON.parse(text) as WordResponse;
+    } else {
+      return extractJson(text) as WordResponse;
+    }
+    
   } catch (error) {
     console.error("Error generating story:", error);
   }
